@@ -186,7 +186,7 @@
     <!--footer-->   
                 <footer class="footer">
                        <p>
-                          <a href="https://github.com/pwingard/">Git</a>&nbsp;&middot;&nbsp;
+                          <a href="https://github.com/pwingard/realestateInvestmentTool">Git</a>&nbsp;&middot;&nbsp;
                           <a href="https://www.linkedin.com/in/pwingard">LinkedIn</a>
                       </p>
                       <p>&copy; <span id="year"></span> | Peter Wingard</p>
@@ -198,15 +198,6 @@
                       </script>
                 </footer>
             </div>
-  
-
-
-
- 
-  
-  
-  
-           
         </div> <!-- /container -->
     </body>
 </html>
