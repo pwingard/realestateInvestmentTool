@@ -58,6 +58,13 @@
                         </div>
                     </div>
                     <div class="panel panel-info">
+    <!--Property address-->
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Property Address<span class="text-danger"> *</span></h3>
+                        </div>
+                        <div class="panel-body">
+                            <input class="form-control" type="text" id="address" value="123 Easy St.">
+                        </div>
     <!--price-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Full Price of Unit<span class="text-danger"> *</span></h3>
@@ -141,16 +148,36 @@
                         <div class="panel-body">
                             <input class="form-control" type="text"  id="offset">
                         </div>
-    <!--submit-->                      
-                        <div class="panel-body">
-                             <input type="submit" class="btn btn-md btn-primary" value="Run" id="submit">   
+    <!--button row-->                        
+                        <div class="row">
+        <!--run-->                 
+                            <div class="col-lg-3">
+                                <div class="panel-body">
+                                     <input type="submit" class="btn btn-md btn-primary" value="Run" id="submit">   
+                                </div>
+                            </div>
+        <!--view Projection--> 
+        <span id="ready"">
+                            <div class="col-lg-3" >
+                                <div class="panel-body" >
+                                    <!-- Trigger the modal with a button -->
+                                    <button type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#myModal">View Projections</button>
+                                </div>   
+                            </div>
+        <!--view amort sched-->      
+                            <div class="col-lg-3">
+                                <div class="panel-body">
+                                    <!--Trigger the modal with a button--> 
+                                    <!--<button type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#myModal">View Amortization</button>-->
+                                </div>   
+                            </div>
+        </span>
+        <!--    empty-->
+                            <div class="col-lg-3">
+                                <!--empty-->
+                            </div>
                         </div>
-    <!--data button-->  
-                        <div class="panel-body" id="ready" >
-                          <!-- Trigger the modal with a button -->
-                            <button type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#myModal">Data</button>
-                        </div>   
-                    </div>
+                   </div> <!-- end  div class="panel panel-info"-->
                 </form>
     <!--output Modal -->
                 <div class="modal fade" id="myModal" role="dialog">

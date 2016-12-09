@@ -7,7 +7,8 @@ ini_set('memory_limit', '2048M');
 
 //print_r($_POST);
 /*
- * <pre>Array
+(
+    [address] => 123 Easy St.
     [purchaseprice] => 335000
     [percentdown] => 20
     [term] => 30
@@ -17,9 +18,9 @@ ini_set('memory_limit', '2048M');
     [insurance] => 420
     [taxes] => 4654
     [appreciation] => 5.5
-    [reportlength] => 30
-    [offset] => 0
-</pre>
+    [reportlength] => 6
+    [offset] => 
+)
  */
 
 $response=new stdClass();
@@ -29,6 +30,11 @@ $response=new stdClass();
 //check input
 foreach ($_POST as $key => &$value) {
     switch ($key) {
+        
+        case "address"://required
+                $operandArr=array("Required");
+                $response=checkInput("Property Address ", $value, $response,$operandArr,NULL, NULL);//max
+            break;
         
         case "purchaseprice"://required >0
                 $operandArr=array("Required","isNumericFloat","ErrIfValLessthanMin");
@@ -137,6 +143,7 @@ $outputObj=new stdClass();
     $outputObj->amortInputsArr=$amortArr["inputs"];
     $outputObj->amortSummaryArr=$amortArr["summary"];
     $outputObj->amortScheduleArr=$amortArr["schedule"];
+    $outputObj->address=$_POST["address"];
     $outputObj->output=array();
     
         //print_r($amortArr["schedule"][0]["summary"]);
@@ -245,7 +252,10 @@ foreach (range(1,$reportLength*12) as $monthIn) {
     $housePayment=$taxPay+$insPay+$amortArr["schedule"][$monthIn-1]["payment"];
     
 }
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$_SESSION['data']=$outputObj;
 echo json_encode($outputObj);
 die();
 

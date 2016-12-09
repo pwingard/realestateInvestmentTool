@@ -4,6 +4,7 @@
         $("#submit").show('fast');
         $("#submit").click(function () {
             $('#ready').hide();
+            var address=$('#address').val();
             var purchaseprice=$('#purchaseprice').val();
             var percentdown=$('#percentdown').val();
             var term=$('#term').val();
@@ -22,6 +23,7 @@
                 dataType:'json',
                 
                 data: {
+                    address: address, 
                     purchaseprice: purchaseprice, 
                     percentdown: percentdown,
                     term: term,
@@ -57,6 +59,7 @@
                                             +" years &bull; Mort. Payment $" +data.amortScheduleArr[0].payment.toFixed(2)
                                             +"<br />Interest Total $" +totIntPaid
                                             +" &bull; Total Paid $" +totPaid
+                                            +"<br /><a href=\"download.php\">Download</a> as CSV"
                                         );
                         makeGrid(data.output);
                         /*
@@ -108,10 +111,9 @@
                 { title: "Owed", name: "BalOwed", type: "text", width: 100, validate: "required" },
                 { title: "Equity", name: "Equity", type: "text", width: 100, validate: "required" },
                 { title: "Value", name: "HouseVal", type: "text", width: 100, validate: "required" },
-                { title: "Payment", name: "MortTaxIns", type: "text", width: 100, validate: "required" },
+                { title: "Rents", name: "MortTaxIns", type: "text", width: 100, validate: "required" },
                 { title: "Income", name: "NetInc", type: "text", width: 100, validate: "required" },
                 { title: "Investment", name: "TotalInvested", type: "text", width: 100, validate: "required" },
-                //{ name: "YearMonth", type: "text", width: 100, validate: "required" },
             ]
     });
     }
