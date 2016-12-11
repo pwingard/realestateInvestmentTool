@@ -70,21 +70,21 @@
                             <h3 class="panel-title">Property Address<span class="text-danger"> *</span></h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text" id="address" value="123 Easy St">
+                            <input class="form-control" type="text" id="address" placeholder="123 Easy St">
                         </div>
     <!--price-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Full Price of Unit<span class="text-danger"> *</span></h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text" id="purchaseprice"  value="335000" >
+                            <input class="form-control" type="text" id="purchaseprice"  placeholder="335000" >
                         </div>
     <!--percent down-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Down Payment %</h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="percentdown" value="20">
+                            <input class="form-control" type="text"  id="percentdown" placeholder="20">
                         </div>
     <!--term-->
                         <div class="panel-heading">
@@ -92,14 +92,14 @@
                             <small>The term in years of loan</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="term" value="30">
+                            <input class="form-control" type="text"  id="term" placeholder="30">
                         </div>
     <!--interest rate-->
                          <div class="panel-heading">
                             <h3 class="panel-title">APR<span class="text-danger"> *</span></h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="interestRate" value="4.1">
+                            <input class="form-control" type="text"  id="interestRate" placeholder="4.1">
                         </div>
     <!--initial rent-->
                         <div class="panel-heading">
@@ -107,7 +107,7 @@
                             <small>Subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="rent" value="2100">
+                            <input class="form-control" type="text"  id="rent" placeholder="2100">
                         </div>
     <!--Monthly Management/Maintenance Percentage-->
                         <div class="panel-heading">
@@ -115,7 +115,7 @@
                             <small>A monthly percentage of the gross rents and subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="managementpercentage" value="8">
+                            <input class="form-control" type="text"  id="managementpercentage" placeholder="8">
                         </div>
     <!--Yearly Insurance-->
                         <div class="panel-heading">
@@ -123,7 +123,7 @@
                             <small>Annual dollar amount subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="insurance" value="420">
+                            <input class="form-control" type="text"  id="insurance" placeholder="420">
                         </div>
     <!--Yearly Taxes-->
                         <div class="panel-heading">
@@ -131,7 +131,7 @@
                             <small>Annual dollar amount subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="taxes" value="4654">
+                            <input class="form-control" type="text"  id="taxes" placeholder="4654">
                         </div>
     <!--Appreciation-->
                         <div class="panel-heading">
@@ -139,21 +139,21 @@
                             <small>Annual percentage rate</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="appreciation" value="5.5">
+                            <input class="form-control" type="text"  id="appreciation" placeholder="5.5">
                         </div>
     <!--Report Length (Years)-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Report Length (Years)</h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="reportlength" value="6">
+                            <input class="form-control" type="text"  id="reportlength" placeholder="6">
                         </div>
     <!--Beginning Offset (Months)-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Beginning Offset (Months)</h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="offset" value="0">
+                            <input class="form-control" type="text"  id="offset" placeholder="0">
                         </div>
     <!--button row-->                        
                         <div class="row">
