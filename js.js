@@ -57,12 +57,13 @@
                                             "Loan Amt. $"+loanAmt 
                                             +" &bull; Interst Rate " +data.amortInputsArr.interest
                                             +"% &bull; Term  " +data.amortInputsArr.term_years
-                                            +" years &bull; Mort. Payment $" +data.amortScheduleArr[0].payment.toFixed(2)
+                                            +" years &bull; Mort. Payment $" +data.amortScheduleArr[0].payment
                                             +"<br />Interest Total $" +totIntPaid
                                             +" &bull; Total Paid $" +totPaid
                                             +"<br /><a href=\"download.php\">Download</a> as CSV"
                                         );
                         makeGrid(data.output);
+                        makeGrid(data.amortScheduleArr);
                         /*
                          * BalOwed:"$267,620.70"
                             Equity:"$67,379.30"
@@ -85,39 +86,72 @@
         });
     });
     
-    function makeGrid(data){
-        
-    $("#jsGrid").jsGrid({
-        width: "100%",
-        height: "400px",
-        inserting: false,
-        editing: false,
-        sorting: false,
-        paging: false,
- 
-        data: data,
-/*
- * BalOwed:"$267,620.70"
-    Equity:"$67,379.30"
-    HouseVal :"$335,000.00"
-    MortTaxIns:"$1,717.80"
-    NetInc:"$214.20"
-    TotalInvested:"$66,785.80"
-    YearMonth:"0_1"
-    date:"Feb 2017"
- */
- 
-        fields: [
-                { title: "Date", name: "date", type: "text", width: 85, validate: "required" },
-                { title: "Owed", name: "BalOwed", type: "text", width: 100, validate: "required" },
-                { title: "Equity", name: "Equity", type: "text", width: 100, validate: "required" },
-                { title: "Value", name: "HouseVal", type: "text", width: 100, validate: "required" },
-                { title: "Rents", name: "MortTaxIns", type: "text", width: 100, validate: "required" },
-                { title: "Income", name: "NetInc", type: "text", width: 100, validate: "required" },
-                { title: "Investment", name: "TotalInvested", type: "text", width: 100, validate: "required" },
-            ]
-    });
+function makeGrid(data){
+    if(data[0].BalOwed) {//appreciation data, otherwise amortization data
+        //console.log("yo BalOwed");
+        $("#jsGridAppr").jsGrid({
+            width: "100%",
+            height: "400px",
+            inserting: false,
+            editing: false,
+            sorting: false,
+            paging: false,
+
+            data: data,
+            /*
+             * (appreciation schedule)
+             * BalOwed:"$267,620.70"
+            Equity:"$67,379.30"
+            HouseVal :"$335,000.00"
+            MortTaxIns:"$1,717.80"
+            NetInc:"$214.20"
+            TotalInvested:"$66,785.80"
+            YearMonth:"0_1"
+            date:"Feb 2017"
+            */
+
+            fields: [
+                    { title: "Date", name: "date", type: "text", width: 85, validate: "required" },
+                    { title: "Value", name: "HouseVal", type: "text", width: 100, validate: "required" },
+                    { title: "Owed", name: "BalOwed", type: "text", width: 100, validate: "required" },
+                    { title: "Equity", name: "Equity", type: "text", width: 100, validate: "required" },
+                    { title: "Rents", name: "MortTaxIns", type: "text", width: 100, validate: "required" },
+                    { title: "Income", name: "NetInc", type: "text", width: 100, validate: "required" },
+                    { title: "Investment", name: "TotalInvested", type: "text", width: 100, validate: "required" },
+                ]
+        });
+    }else{
+        $("#jsGridAmort").jsGrid({
+            width: "100%",
+            height: "400px",
+            inserting: false,
+            editing: false,
+            sorting: false,
+            paging: false,
+
+            data: data,
+            /*
+                (amortization sched)
+                Array[360]
+                Object
+                balance:267620.695032
+                interest:915.666666667
+                payment:1294.97163455
+                principal:379.304967888
+            */
+
+            fields: [
+                    { title: "No.", name: "paymentNo", type: "text", width: 50, validate: "required" },
+                    { title: "Balance", name: "balance", type: "text", width: 135, validate: "required" },
+                    { title: "Interest", name: "interest", type: "text", width: 135, validate: "required" },
+                    { title: "Payment", name: "payment", type: "text", width: 135, validate: "required" },
+                    { title: "Principle", name: "principal", type: "text", width: 135, validate: "required" },
+//                    { title: "Income", name: "NetInc", type: "text", width: 100, validate: "required" },
+//                    { title: "Investment", name: "TotalInvested", type: "text", width: 100, validate: "required" },
+                ]
+        });
     }
+}
     
 function commaSeparateNumber(val){
     while (/(\d+)(\d{3})/.test(val.toString())){

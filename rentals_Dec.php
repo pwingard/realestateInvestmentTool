@@ -311,22 +311,23 @@ class Amortization {
                         return false;
                 }
         }
-        private function calculate(){
+        private function calculate($i){
                 $deno = 1 - 1 / pow((1+ $this->interest),$this->period);
                 if($deno==0)$deno=.0001;
                 $this->term_pay = ($this->loan_amount * $this->interest) / $deno;
                 $interest = $this->loan_amount * $this->interest;
                 $this->principal = $this->term_pay - $interest;
                 $this->balance = $this->loan_amount - $this->principal;
-                return array (
-                        'payment' 	=> $this->term_pay,
-                        'interest' 	=> $interest,
-                        'principal'     => $this->principal,
-                        'balance' 	=> $this->balance
+                return array (//"$".number_format(round(($amortArr["schedule"][$monthIn-1]["balance"]), 2),2);
+                        'paymentNo'     => $i,
+                        'payment' 	=> "$".number_format(round(($this->term_pay), 2),2),
+                        'interest' 	=> "$".number_format(round(($interest), 2),2),
+                        'principal' 	=> "$".number_format(round(($this->principal), 2),2),
+                        'balance' 	=> "$".number_format(round(($this->balance), 2),2),
                         );
         }
         public function getSummary(){
-                $this->calculate();
+                $this->calculate(0);
                 $total_pay = $this->term_pay *  $this->period;
                 $total_interest = $total_pay - $this->loan_amount;
                 return array (
@@ -336,10 +337,9 @@ class Amortization {
         }
         public function getSchedule(){
                 $shedule = array();
-
+                $i=1;
                 while  ($this->balance >= 0) {
-                        $i=1;
-                        array_push($shedule, $this->calculate());
+                        array_push($shedule, $this->calculate($i));
                         $this->loan_amount = $this->balance;
                         $this->period--;
                         $i++;
