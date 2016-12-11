@@ -1,4 +1,5 @@
     $(document).ready(function(){
+        
         $('#errDiv').hide();
         $('#ready').hide();
         $("#submit").show('fast');

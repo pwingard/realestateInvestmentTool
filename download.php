@@ -71,7 +71,7 @@ function outputCSV($outputObj) {
     $title[]="Pete Wingard © 2016 bizpfw@gmail.com";
     $title[]=""; 
     $title[]=""; 
-    $title[]="Projected results for ".$outputObj->address." on ".date('F jS, Y h:i:s a', time())." ". $tz;
+    $title[]="Report for ".$outputObj->address." created on ".date('F jS, Y h:i:s a', time())." ". $tz;
     $title[]=""; 
     $title[]=""; 
     foreach($title as $row) {//rows
