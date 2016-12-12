@@ -231,12 +231,14 @@ foreach (range(1,$reportLength*12) as $monthIn) {
                 $thisRowObj->$value="$".number_format(round($netRent, 2),2);
                 break;
             case "BalOwed":
-                $thisRowObj->$value="$".number_format(round(($amortArr["schedule"][$monthIn-1]["balance"]), 2),2);
+                //echo $amortArr["schedule"][$monthIn-1]["balance"]." ";
+                 $thisRowObj->$value="$".number_format(round(($amortArr["schedule"][$monthIn-1]["balance"]), 2),2);
+                //echo $thisRowObj->$value;echo "\n";
                 break;
             case "Equity":
                 $thisRowObj->$value="$".number_format(round(($valueOfHouse-$amortArr["schedule"][$monthIn-1]["balance"]), 2),2);
                 break;
-
+            
             default:
                 break;
         }

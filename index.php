@@ -1,3 +1,18 @@
+<?php
+//pre-populate values for testing or use placeholders
+if(isset($_GET["pp"]) && $_GET["pp"]==1) {
+    define('SETVAL', TRUE);
+}
+else {
+    define('SETVAL', FALSE);
+}
+
+function setVal($val){
+  if(SETVAL) return "value=\"$val\"";
+    else 
+        return "placeholder=\"$val\"";  
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -70,21 +85,22 @@
                             <h3 class="panel-title">Property Address<span class="text-danger"> *</span></h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text" id="address" placeholder="123 Easy St">
+                            
+                            <input class="form-control" type="text" id="address" <?php echo setVal("123 Easy St");?>>
                         </div>
     <!--price-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Full Price of Unit<span class="text-danger"> *</span></h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text" id="purchaseprice"  placeholder="335000" >
+                            <input class="form-control" type="text" id="purchaseprice"  <?php echo setVal("335000");?> >
                         </div>
     <!--percent down-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Down Payment %</h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="percentdown" placeholder="20">
+                            <input class="form-control" type="text"  id="percentdown" <?php echo setVal("20");?>>
                         </div>
     <!--term-->
                         <div class="panel-heading">
@@ -92,14 +108,14 @@
                             <small>The term in years of loan</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="term" placeholder="30">
+                            <input class="form-control" type="text"  id="term" <?php echo setVal("30");?>>
                         </div>
     <!--interest rate-->
                          <div class="panel-heading">
                             <h3 class="panel-title">APR<span class="text-danger"> *</span></h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="interestRate" placeholder="4.1">
+                            <input class="form-control" type="text"  id="interestRate" <?php echo setVal("4.1");?>>
                         </div>
     <!--initial rent-->
                         <div class="panel-heading">
@@ -107,7 +123,7 @@
                             <small>Subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="rent" placeholder="2100">
+                            <input class="form-control" type="text"  id="rent" <?php echo setVal("2100");?>>
                         </div>
     <!--Monthly Management/Maintenance Percentage-->
                         <div class="panel-heading">
@@ -115,7 +131,7 @@
                             <small>A monthly percentage of the gross rents and subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="managementpercentage" placeholder="8">
+                            <input class="form-control" type="text"  id="managementpercentage" <?php echo setVal("8");?>>
                         </div>
     <!--Yearly Insurance-->
                         <div class="panel-heading">
@@ -123,7 +139,7 @@
                             <small>Annual dollar amount subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="insurance" placeholder="420">
+                            <input class="form-control" type="text"  id="insurance" <?php echo setVal("420");?>>
                         </div>
     <!--Yearly Taxes-->
                         <div class="panel-heading">
@@ -131,7 +147,7 @@
                             <small>Annual dollar amount subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="taxes" placeholder="4654">
+                            <input class="form-control" type="text"  id="taxes" <?php echo setVal("4654");?>>
                         </div>
     <!--Appreciation-->
                         <div class="panel-heading">
@@ -139,21 +155,21 @@
                             <small>Annual percentage rate</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="appreciation" placeholder="5.5">
+                            <input class="form-control" type="text"  id="appreciation" <?php echo setVal("5.5");?>>
                         </div>
     <!--Report Length (Years)-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Report Length (Years)</h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="reportlength" placeholder="6">
+                            <input class="form-control" type="text"  id="reportlength" <?php echo setVal("6");?>>
                         </div>
     <!--Beginning Offset (Months)-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Beginning Offset (Months)</h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="offset" placeholder="0">
+                            <input class="form-control" type="text"  id="offset" <?php echo setVal("0");?>>
                         </div>
     <!--button row-->                        
                         <div class="row">
