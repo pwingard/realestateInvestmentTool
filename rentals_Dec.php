@@ -231,9 +231,7 @@ foreach (range(1,$reportLength*12) as $monthIn) {
                 $thisRowObj->$value="$".number_format(round($netRent, 2),2);
                 break;
             case "BalOwed":
-                //echo $amortArr["schedule"][$monthIn-1]["balance"]." ";
-                 $thisRowObj->$value="$".number_format(round(($amortArr["schedule"][$monthIn-1]["balance"]), 2),2);
-                //echo $thisRowObj->$value;echo "\n";
+                 $thisRowObj->$value="$".number_format(round($amortArr["schedule"][$monthIn-1]["balance"], 2),2);
                 break;
             case "Equity":
                 $thisRowObj->$value="$".number_format(round(($valueOfHouse-$amortArr["schedule"][$monthIn-1]["balance"]), 2),2);
@@ -325,7 +323,7 @@ class Amortization {
                         'payment' 	=> "$".number_format(round(($this->term_pay), 2),2),
                         'interest' 	=> "$".number_format(round(($interest), 2),2),
                         'principal' 	=> "$".number_format(round(($this->principal), 2),2),
-                        'balance' 	=> "$".number_format(round(($this->balance), 2),2),
+                        'balance' 	=> round($this->balance,2),
                         );
         }
         public function getSummary(){
