@@ -95,8 +95,6 @@ function outputCSV($outputObj) {
         $thisrow=array();
     }
     
-    
-    
     foreach($outputObj->output as $row) {//rows
         foreach ($row as $colName=>$cell) {//column names
             if($colName!="YearMonth")//skip a column

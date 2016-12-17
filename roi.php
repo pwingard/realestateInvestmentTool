@@ -5,24 +5,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 ini_set('memory_limit', '2048M');
 
-//print_r($_POST);
-/*
-(
-    [address] => 123 Easy St.
-    [purchaseprice] => 335000
-    [percentdown] => 20
-    [term] => 30
-    [interestRate] => 4.1
-    [rent] => 2100
-    [managementpercentage] => 8
-    [insurance] => 420
-    [taxes] => 4654
-    [appreciation] => 5.5
-    [reportlength] => 6
-    [offset] => 
-)
- */
-
 $response=new stdClass();
     $response->errFlag=false;;
     $response->errMsg="";
@@ -31,17 +13,15 @@ $response=new stdClass();
 foreach ($_POST as $key => &$value) {
     switch ($key) {
         
-        case "address"://required
-                $operandArr=array("Required");
-                $response=checkInput("Property Address ", $value, $response,$operandArr,NULL, NULL);//max
+        case "prprtyAddr":
             break;
         
-        case "purchaseprice"://required >0
+        case "fxPrchPrcDlrAmt"://required >0
                 $operandArr=array("Required","isNumericFloat","ErrIfValLessthanMin");
-                $response=checkInput("Full Price of Unit", $value, $response,$operandArr,1, NULL);//max
+                $response=checkInput("Purchase Price of Property", $value, $response,$operandArr,1, NULL);//max
             break;
         
-        case "percentdown":  //between 0-99
+        case "fxdDwnPmtPrct":  //between 0-99
                 if(IsNullOrEmptyString($value)){
                     $value=0;//set default value if empty
                 }
@@ -49,30 +29,54 @@ foreach ($_POST as $key => &$value) {
                 $response=checkInput("Down Payment %", $value, $response,$operandArr,0,99);
             break;
             
-        case "term"://required between 1-100
+        case "termYrs"://required between 1-100
                 $operandArr=array("Required","isNumeric","ErrIfValGreaterthanMaxOrLesthanMin");
                 $response=checkInput("Term", $value, $response,$operandArr,1,100);
             break;
         
-        case "interestRate"://required //between 0-100
+        case "APR"://required //between 0-100
                 $operandArr=array("Required","isNumericFloat","ErrIfValGreaterthanMaxOrLesthanMin");
                 $response=checkInput("APR", $value, $response,$operandArr,0,100);
             break;
         
-        case "rent"://required >=0
+        case "strtMnthlyRent"://required >=0
                 $operandArr=array("Required","isNumericFloat","ErrIfValLessthanMin");
                 $response=checkInput("Rent", $value, $response,$operandArr,0, NULL);//max
             break;
         
-        case "managementpercentage": //b/t 0-100
+        case "mnthlyMngmtPrct": //b/t 0-100
                 if(IsNullOrEmptyString($value)){
                     $value=0;//set default value if empty
                 }
                 $operandArr=array("isNumericFloat","ErrIfValGreaterthanMaxOrLesthanMin");
-                $response=checkInput("Management & Maintenance", $value, $response,$operandArr,0,100);
+                $response=checkInput("Monthly Management Percentage", $value, $response,$operandArr,0,100);
             break;
             
-        case "taxes": 
+        case "mnthlyMntnNCpImprPrct": //b/t 0-100
+                if(IsNullOrEmptyString($value)){
+                    $value=0;//set default value if empty
+                }
+                $operandArr=array("isNumericFloat","ErrIfValGreaterthanMaxOrLesthanMin");
+                $response=checkInput("Monthly Maintenance and Capitol Improvements Percentage", $value, $response,$operandArr,0,100);
+            break;
+            
+        case "mnthlyVacColLossPrct": //b/t 0-100
+                if(IsNullOrEmptyString($value)){
+                    $value=0;//set default value if empty
+                }
+                $operandArr=array("isNumericFloat","ErrIfValGreaterthanMaxOrLesthanMin");
+                $response=checkInput("Monthly Vacancy and Collection Losses Percentage", $value, $response,$operandArr,0,100);
+            break;
+            
+        case "fxdClsngCstDlrAmt": //b/t 0-100
+                if(IsNullOrEmptyString($value)){
+                    $value=0;//set default value if empty
+                }
+                $operandArr=array("isNumericFloat","ErrIfValLessthanMin");
+                $response=checkInput("Closing Costs", $value, $response,$operandArr,0,null);
+            break;
+            
+        case "annlTxsDlrAmt": 
                 if(IsNullOrEmptyString($value)){ 
                     $value=0;//assume a default
                 }
@@ -80,7 +84,7 @@ foreach ($_POST as $key => &$value) {
                 $response=checkInput("Taxes", $value, $response,$operandArr,0, NULL);//max
             break;
         
-        case "insurance": 
+        case "annlInsDlrAmt": 
                 if(IsNullOrEmptyString($value)){ 
                     $value=0;//assume a default
                 }
@@ -88,7 +92,7 @@ foreach ($_POST as $key => &$value) {
                 $response=checkInput("Insurance", $value, $response,$operandArr,0, NULL);//max
             break;
             
-        case "appreciation"://between 0-100
+        case "annlApprcPrct"://between 0-100
                 if(IsNullOrEmptyString($value)){
                     $value=0;//assume a default
                 }
@@ -96,24 +100,24 @@ foreach ($_POST as $key => &$value) {
                 $response=checkInput("Appreciation", $value, $response,$operandArr,-100,100);
             break;
             
-        case "reportlength"://no greater than term
+        case "yrsToSale"://no greater than term
                 if(IsNullOrEmptyString($value)){
-                    $value=$_POST["term"]; //set defaut value of report length to term of loan
+                    $value=$_POST["yrsToSale"]; //set defaut value of report length to term of loan
                 }
                 $operandArr=array("isNumeric","ErrIfValGreaterthanMaxOrLesthanMin");
-                $response=checkInput("Report Length", $value, $response,$operandArr,1,$_POST["term"]);
+                $response=checkInput("Years Until Sale", $value, $response,$operandArr,1,$_POST["termYrs"]);
             break;
-         case "offset"://.=0
+         case "mthsToCls"://.=0
                 if(IsNullOrEmptyString($value)){
-                    $value=0;//assume a default
+                    $value=1;//assume a default
                 }
                 $operandArr=array("isNumeric","ErrIfValLessthanMin");
-                $response=checkInput("Beginning Offseth", $value, $response,$operandArr,0,NULL);
+                $response=checkInput("Months Before Close", $value, $response,$operandArr,0,NULL);
             break;
             
         default:
                 $response->errFlag=true;
-                $response->errMsg.="'$name' unknown parameter found<br />";
+                $response->errMsg.="'$key' unknown parameter found<br />";
             break;
     }
     
@@ -125,133 +129,162 @@ if($response->errFlag==true){
 die();
 }
 
-$priceOfHouse=$_POST["purchaseprice"];
-$pertDwn=$_POST["percentdown"]/100;
-$term=$_POST["term"];
-$interestRate=$_POST["interestRate"];
+//gather post data
+$fxPrchPrcDlrAmt=$_POST["fxPrchPrcDlrAmt"];
+$fxdDwnPmtPrct=$_POST["fxdDwnPmtPrct"]/100;
+$termYrs=$_POST["termYrs"];
+$APR=$_POST["APR"];
+$fxdClsngCstDlrAmt=$_POST["fxdClsngCstDlrAmt"];//Vacancy and collection losses perct
+$yrsToSale=$_POST["yrsToSale"]+1;//year zero shows starting balances
+
+$strtMnthlyRent=$_POST["strtMnthlyRent"];//initial rent
+$mnthlyMngmtPrct=$_POST["mnthlyMngmtPrct"]/100;//management perct
+$mnthlyMntnNCpImprPrct=$_POST["mnthlyMntnNCpImprPrct"]/100;//Maintanence & capitol Improvements perct
+$mnthlyVacColLossPrct=$_POST["mnthlyVacColLossPrct"]/100;//Vacancy and collection losses perct
+
+$strtAnnlTxsDlrAmt=$_POST["annlTxsDlrAmt"];//starting annual tax amount
+$strtAnnlInsDlrAmt=$_POST["annlInsDlrAmt"];//starting annual ins dollar amount
+$annlApprcPrct=$_POST["annlApprcPrct"]/100;//annual appriciation on rent, taxes, insurance, property value
 
 $data = array(
-        'loan_amount' 	=> $priceOfHouse-($pertDwn*$priceOfHouse),
-        'term_years' 	=> $term,
-        'interest' 	=> $interestRate,
+        'loan_amount' 	=> $fxPrchPrcDlrAmt-($fxdDwnPmtPrct*$fxPrchPrcDlrAmt),
+        'term_years' 	=> $termYrs,
+        'interest' 	=> $APR,
         'terms' 	=> 12//months in year
         );
         $amort=new Amortization($data);
         $amortArr=$amort::$results;
-
+        $mortPaymnt=$amortArr["schedule"][0]["payment"];
+//save the amort data in an object
 $outputObj=new stdClass();
+    $outputObj->post=$_POST;
     $outputObj->amortInputsArr=$amortArr["inputs"];
     $outputObj->amortSummaryArr=$amortArr["summary"];
     $outputObj->amortScheduleArr=$amortArr["schedule"];
-    $outputObj->address=$_POST["address"];
-    $outputObj->output=array();
+    $outputObj->prprtyAddr=$_POST["prprtyAddr"];
+    $outputObj->costAnlys=array();
+    //$outputObj->annlCashFlow=array();
+    //$outputObj->costAnlys->annlCashFlow=array();
+    //$outputObj->output=array();
+$annlCashFlowArr=array();
     
-        //print_r($amortArr["schedule"][0]["summary"]);
-        /*
-         *     [inputs] => Array
+    //annual mort payment (static)
+    $annlMortPay=$outputObj->amortScheduleArr[0]["payment"]*12;
+    //annual appreciation perct (static)
+    $annlApprcPrct;
+    //initial annual gross rent (appreciated)
+    $annlGrossRent=$strtMnthlyRent*12;
+    //initial annual ins pay (appreciated)
+    $annlInsFee=$strtAnnlInsDlrAmt;
+    //initial annual tax payment (appreciated)
+    $annlTaxFee=$strtAnnlTxsDlrAmt;
+    //initial annual mamangment fee (increases taken care by increased rent)
+    $annlMngmtFee=$annlGrossRent*$mnthlyMngmtPrct;
+    //initial annual vacancy fee (increases taken care by increased rent)
+    $annlVacNCollecLossAcc=$annlGrossRent*$mnthlyVacColLossPrct;
+    //initial annual cap improv fee (increases taken care by increased rent)
+    $annlMainNCapImprvAcc=$annlGrossRent*$mnthlyMntnNCpImprPrct;
+    //initial cash outlay (downpayment and closing cost3)
+    $initialCashOutlay=round($fxPrchPrcDlrAmt*$fxdDwnPmtPrct+$fxdClsngCstDlrAmt,2);//year 0
+    
+    $accNames=array(                
+                    "annlGrossRent"=>array("appreciable",(real)$annlGrossRent, "add"),//initial value for year 1
+                    "annlInsFee"=>array("appreciable",(real)$annlInsFee, "subtract"),//initial value for year 1
+                    "annlTaxFee"=>array("appreciable",(real)$annlTaxFee, "subtract"),//initial value for year 1
+                    "annlMortPay"=>array("static",(real)$annlMortPay, "subtract"),
+                    "annlMngmtFee"=>array("rentPrct",(real)$annlMngmtFee, "subtract"),
+                    "annlVacNCollecLossAcc"=>array("rentPrct",(real)$annlVacNCollecLossAcc, "subtract"),
+                    "annlMainNCapImprvAcc"=>array("rentPrct",(real)$annlMainNCapImprvAcc, "subtract"),
+                    //"annlCashFlow"=>array(),
+    );
+
+    //$annlCashFlowArr=array();
+    foreach (range(0, $yrsToSale-1) as $year) {
+        //set initial values to 0 except for colising costs and down payment
+        if($year==0){
+            foreach ($accNames as $key => $whoCares) {
+                if($key!="annlCashFlow"){
+                    $outputObj->costAnlys[$key][$year]=0;
+                }else{
+                    
+                }
+                $annlCashFlowArr[$year]=-1*$initialCashOutlay;
+            }
+        }else{//save first year preappriation values
+            $annlCashFlowArr[$year]=0;//initialize
+            foreach ($accNames as $accKey1 => $arr1) {
+                //record the initial values
+                $outputObj->costAnlys[$accKey1][$year]=round($arr1[1],2);
+                //add or subtract from the annual cash flow
+                if($arr1[2]=="add"){
+                    $annlCashFlowArr[$year]+=round($arr1[1],2);
+                }
+                else{
+                    $annlCashFlowArr[$year]-=round($arr1[1],2);
+                }
+            }
+            //print_r($accNames);
+            /*
+            [annlGrossRent] => Array
         (
-            [loan_amount] => 264000
-            [term_years] => 30
-            [interest] => 4
-            [terms] => 12
-        )
+            [0] => appreciable
+            [1] => 25200
+            [2] => add
+             */
 
-    [summary] => Array
-        (
-            [total_pay] => 453735.49681
-            [total_interest] => 189735.49681
-        )
+            //add appreciation
+            foreach ($accNames as $accKey2 => &$arr2) {
+                if($arr2[0]=="appreciable"){
+                    $arr2[1]=round($arr2[1]+$annlApprcPrct*$arr2[1],2);
+                }
+            }
+            //adjust rental perctages
+            foreach ($accNames as $accKey3 => &$arr3) {
+                if($arr3[0]=="rentPrct"){
+                    $arr3[1]=round($arr3[1]+$annlApprcPrct*$arr3[1],2);
+                }
+            }
+        }
+    }
+    
+$outputObj->annlCashFlowArr=$annlCashFlowArr;
 
-    [schedule] => Array
-        (
-            [0] => Array
-                (
-                    [payment] => 1260.37638003
-                    [interest] => 880
-                    [principal] => 380.376380029
-                    [balance] => 263619.62362
-                )
+$absValInitialCashOutlay=abs($initialCashOutlay);//absolute value
 
-         */
+foreach ($annlCashFlowArr as $key => $value) {
+    if($key!=0)//skip year 0 which is the cash outlay
+        $outputObj->earningst+=$value;
+}
 
-$rent=$_POST["rent"];//initial rent
-$managementpercentage=$_POST["managementpercentage"]/100;//initial rent
-$percentdown=$_POST["percentdown"]/100;//initial rent
-$taxPay=$_POST["taxes"]/12;//4654/12;
-$insPay=$_POST["insurance"]/12;//420/12;
+//ROI = ( (Earnings) - Initial Invested Amount) / Initial Invested Amount) ) × 100
+$outputObj->roi=round(($outputObj->earningst-$absValInitialCashOutlay)/($absValInitialCashOutlay),4)*100;
 
-$netRent=(1-$managementpercentage)*$rent;//.92
-$year=0;
+/*
+ *     foreach (range(1,$reportLength*12) as $monthIn) 
+        foreach ($assocArrNamesarray as $value
+        $thisRowObj->$value
+        $outputObj->output[]=$thisRowObj;
+ */
 
-$TotInvest=$moneyDown=$priceOfHouse*($percentdown);
-$monthlyAppreciation=$_POST["appreciation"]/100/12;//0.00457;//7%apr 00583, 6%.005, 5% .00417
-$reportLength=$_POST["reportlength"];
 
-$housePayment=$taxPay+$insPay+$amortArr["schedule"][0]["payment"];
-$beginingMonthOffset=1+$_POST["offset"];
-
-$valueOfHouse=$priceOfHouse;
-$yearlast=0;
-
-$assocArrNamesarray=array('date', 'YearMonth', 'MortTaxIns', 'NetInc', 'TotalInvested', 'HouseVal', 'RentNet',
-        'BalOwed', 'Equity');
-
-foreach (range(1,$reportLength*12) as $monthIn) {
+foreach (range(0, $yrsToSale-1) as $year) {
     
     $thisRowObj=new stdClass();
     
-    $year=floor(($monthIn-1)/12);
-    $netIncome=$netRent-$housePayment;
-    $TotInvest=$TotInvest-$netIncome;
+    $thisRowObj->year=$year;
+    $thisRowObj->annlGrossRent="$".number_format($outputObj->costAnlys["annlGrossRent"][$year],2);
+    $thisRowObj->annlInsFee="$".number_format($outputObj->costAnlys["annlInsFee"][$year],2);
+    $thisRowObj->annlTaxFee="$".number_format($outputObj->costAnlys["annlTaxFee"][$year],2);
+    $thisRowObj->annlMortPay="$".number_format($outputObj->costAnlys["annlMortPay"][$year],2);
+    $thisRowObj->annlMngmtFee="$".number_format($outputObj->costAnlys["annlMngmtFee"][$year],2);
+    $thisRowObj->annlVacNCollecLossAcc="$".number_format($outputObj->costAnlys["annlVacNCollecLossAcc"][$year],2);
+    $thisRowObj->annlMainNCapImprvAcc="$".number_format($outputObj->costAnlys["annlMainNCapImprvAcc"][$year],2);
+    $thisRowObj->cashFlow="$".number_format($outputObj->annlCashFlowArr[$year],2);
     
-    $thisMonth=$monthIn+$beginingMonthOffset;
-    
-   //[{ "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false }, 
-    foreach ($assocArrNamesarray as $value) {
-        switch ($value) {
-            case "date":
-                $thisRowObj->$value=date('M Y', strtotime("+$thisMonth months"));
-                break;
-            case "YearMonth":
-                $thisRowObj->$value=$year."_".$monthIn;
-                break;
-            case "MortTaxIns":
-                $thisRowObj->$value="$".number_format(round($housePayment, 2),2);
-                break;
-            case "NetInc":
-                $thisRowObj->$value="$".number_format(round($netIncome, 2),2);
-                break;
-            case "TotalInvested":
-                $thisRowObj->$value="$".number_format(round($TotInvest, 2),2);
-                break;
-            case "HouseVal":
-                $thisRowObj->$value="$".number_format(round($valueOfHouse, 2),2);
-                break;
-            case "Rent":
-                $thisRowObj->$value="$".number_format(round($netRent, 2),2);
-                break;
-            case "BalOwed":
-                 $thisRowObj->$value="$".number_format(round($amortArr["schedule"][$monthIn-1]["balance"], 2),2);
-                break;
-            case "Equity":
-                $thisRowObj->$value="$".number_format(round(($valueOfHouse-$amortArr["schedule"][$monthIn-1]["balance"]), 2),2);
-                break;
-            
-            default:
-                break;
-        }
-    }
     $outputObj->output[]=$thisRowObj;
-        
-    $yearlast=$year;
-       
-    $netRent=$netRent+$netRent*$monthlyAppreciation;
-    $valueOfHouse=$valueOfHouse+$valueOfHouse*$monthlyAppreciation;
-    $taxPay=$taxPay+$taxPay*$monthlyAppreciation;
-    $insPay=$insPay+$insPay*$monthlyAppreciation;
-    $housePayment=$taxPay+$insPay+$amortArr["schedule"][$monthIn-1]["payment"];
-    
 }
+//$outputObj->roi;
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -320,7 +353,7 @@ class Amortization {
                 $this->balance = $this->loan_amount - $this->principal;
                 return array (//"$".number_format(round(($amortArr["schedule"][$monthIn-1]["balance"]), 2),2);
                         'paymentNo'     => $i,
-                        'payment' 	=> "$".number_format(round(($this->term_pay), 2),2),
+                        'payment' 	=> round($this->term_pay,2),
                         'interest' 	=> "$".number_format(round(($interest), 2),2),
                         'principal' 	=> "$".number_format(round(($this->principal), 2),2),
                         'balance' 	=> round($this->balance,2),
@@ -384,13 +417,13 @@ function checkInput($name, $value, $response,$operandArr,$min, $max){
             case "isNumeric":
                     if((!is_numeric($value) || floor( $value ) != $value)){//no decimals
                         $response->errFlag=true;
-                        $response->errMsg.="'$name' can must be interger values only<br />";
+                        $response->errMsg.="'$name' can must be interger values<br />";
                     }
                 break;
             case "isNumericFloat":
                     if(!is_numeric($value)){//allow decimals
                         $response->errFlag=true;
-                        $response->errMsg.="'$name' must be an interger or decimal value only<br />";
+                        $response->errMsg.="'$name' must be an interger or decimal value<br />";
                     }
                 break;
             default:

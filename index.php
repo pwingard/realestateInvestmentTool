@@ -57,50 +57,51 @@ function setVal($val){
                         <li role="presentation"><a href="contact/contact.html">Contact</a></li>
                     </ul>
                 </nav>
-                <h3 class="text-muted">REIT</h3><small>Real Estate Investment Tool</small>
+                <h3 class="text-muted">RE12C</h3><small>Real Estate Investment Estimator</small>
             </div>
 
             <div class="col-lg-12">  
 
                 <form id="formwhatever" action="" method="post" name="form" enctype="multipart/form-data">                  
 
-                    <p>The Real Estate Investment Tool is for helping real estate investors gauge probable 
-                        investment values on rental properties. Tool inputs property value, mortgage parameters, 
-                        and anticipated appreciation rates and outputs an amortization-like schedule showing 
-                        return on investment over time.
+                    <p>The Real Estate Investment Tool is for helping real estate investors gauge potential 
+                        investment ROIs on rental properties. Tool inputs property value, mortgage parameters, 
+                        and anticipated appreciation rates and outputs an amortization table and a table  showing 
+                        the cash flow over a report period per year.
                     </p>
-
-                    <p id="errP">&nbsp;Numbers Only
-                            <kbd> No letters, symbols, or commas </kbd>&nbsp;<span class="text-danger">* </span>Required
-                    </p>
-    <!--error output-->                       
-                    <div class="panel panel-default" id="errDiv" >
-                        <div class="panel-body">
-                            <span id="errOutput" class="text-danger"></span>
+                    <div class="row">
+                        <div class="panel" >
+                            <div class="col-lg-4 panel-body" id="errP"><kbd>&nbsp;Numbers Only&nbsp;</kbd>&nbsp;
+                            </div>
+                            <div class="col-lg-8 panel-body"><span class="text-danger">&nbsp;*&nbsp;</span>Indicates Required Field
+                            </div>
+    <!--error output-->       
+                            <div class="panel-body" id="errDiv" >
+                                <span id="errOutput" class="text-danger"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="panel panel-info">
     <!--Property address-->
                         <div class="panel-heading">
-                            <h3 class="panel-title">Property Address<span class="text-danger"> *</span></h3>
+                            <h3 class="panel-title">Property Address</h3>
                         </div>
                         <div class="panel-body">
-                            
-                            <input class="form-control" type="text" id="address" <?php echo setVal("123 Easy St");?>>
+                            <input class="form-control" type="text" id="prprtyAddr" <?php echo setVal("203 Poplar St");?>>
                         </div>
     <!--price-->
                         <div class="panel-heading">
-                            <h3 class="panel-title">Full Price of Unit<span class="text-danger"> *</span></h3>
+                            <h3 class="panel-title">Purchase Price of Property<span class="text-danger"> *</span></h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text" id="purchaseprice"  <?php echo setVal("335000");?> >
+                            <input class="form-control" type="text" id="fxPrchPrcDlrAmt"  <?php echo setVal("335000");?> >
                         </div>
     <!--percent down-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Down Payment %</h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="percentdown" <?php echo setVal("20");?>>
+                            <input class="form-control" type="text"  id="fxdDwnPmtPrct" <?php echo setVal("20");?>>
                         </div>
     <!--term-->
                         <div class="panel-heading">
@@ -108,14 +109,14 @@ function setVal($val){
                             <small>The term in years of loan</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="term" <?php echo setVal("30");?>>
+                            <input class="form-control" type="text"  id="termYrs" <?php echo setVal("30");?>>
                         </div>
     <!--interest rate-->
                          <div class="panel-heading">
                             <h3 class="panel-title">APR<span class="text-danger"> *</span></h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="interestRate" <?php echo setVal("4.1");?>>
+                            <input class="form-control" type="text"  id="APR" <?php echo setVal("4.1");?>>
                         </div>
     <!--initial rent-->
                         <div class="panel-heading">
@@ -123,15 +124,38 @@ function setVal($val){
                             <small>Subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="rent" <?php echo setVal("2100");?>>
+                            <input class="form-control" type="text"  id="strtMnthlyRent" <?php echo setVal("2100");?>>
                         </div>
-    <!--Monthly Management/Maintenance Percentage-->
+    <!--Monthly Management Percentage-->
                         <div class="panel-heading">
-                            <h3 class="panel-title">Management & Maintenance</h3>
-                            <small>A monthly percentage of the gross rents and subject to appreciation</small>
+                            <h3 class="panel-title">Monthly Management Percentage</h3>
+                            <small>A monthly percentage of the gross rents</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="managementpercentage" <?php echo setVal("8");?>>
+                            <input class="form-control" type="text"  id="mnthlyMngmtPrct" <?php echo setVal("4.17");?>>
+                        </div>
+    <!--Monthly Maintenance and Capitol Improvements Percentage-->
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Monthly Maintenance and Capitol Improvements Percentage</h3>
+                        <small>A monthly percentage set aside from gross rents</small>
+                    </div>
+                    <div class="panel-body">
+                        <input class="form-control" type="text"  id="mnthlyMntnNCpImprPrct" <?php echo setVal("5.56");?>>
+                    </div>
+    <!--Monthly Vacancy/Collection Losses Percentage-->
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Monthly Vacancy and Collection Losses Percentage</h3>
+                        <small>An anticipated monthly percentage lost deducted from gross rents</small>
+                    </div>
+                    <div class="panel-body">
+                        <input class="form-control" type="text"  id="mnthlyVacColLossPrct" <?php echo setVal("2.78");?>>
+                    </div>
+    <!--Closing Costs-->
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Closing Costs</h3>
+                        </div>
+                        <div class="panel-body">
+                            <input class="form-control" type="text"  id="fxdClsngCstDlrAmt" <?php echo setVal("6900");?>>
                         </div>
     <!--Yearly Insurance-->
                         <div class="panel-heading">
@@ -139,7 +163,7 @@ function setVal($val){
                             <small>Annual dollar amount subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="insurance" <?php echo setVal("420");?>>
+                            <input class="form-control" type="text"  id="annlInsDlrAmt" <?php echo setVal("420");?>>
                         </div>
     <!--Yearly Taxes-->
                         <div class="panel-heading">
@@ -147,29 +171,31 @@ function setVal($val){
                             <small>Annual dollar amount subject to appreciation</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="taxes" <?php echo setVal("4654");?>>
+                            <input class="form-control" type="text"  id="annlTxsDlrAmt" <?php echo setVal("4654");?>>
                         </div>
     <!--Appreciation-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Appreciation</h3>
-                            <small>Annual percentage rate</small>
+                            <small>Estimated average annual appreciation rate for the property</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="appreciation" <?php echo setVal("5.5");?>>
+                            <input class="form-control" type="text"  id="annlApprcPrct" <?php echo setVal("5.5");?>>
                         </div>
-    <!--Report Length (Years)-->
+    <!--Years Until Sale-->
                         <div class="panel-heading">
-                            <h3 class="panel-title">Report Length (Years)</h3>
+                            <h3 class="panel-title">Years Until Sale</h3>
+                            <small>Or when equity becomes a factor in planning?</small>
                         </div>
+                            
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="reportlength" <?php echo setVal("6");?>>
+                            <input class="form-control" type="text"  id="yrsToSale" name="yo" <?php echo setVal("6");?>>
                         </div>
-    <!--Beginning Offset (Months)-->
+    <!--Months to Closing-->
                         <div class="panel-heading">
-                            <h3 class="panel-title">Beginning Offset (Months)</h3>
+                            <h3 class="panel-title">Months Before Closing Loan</h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="offset" <?php echo setVal("0");?>>
+                            <input class="form-control" type="text"  id="mthsToCls" <?php echo setVal("1");?>>
                         </div>
     <!--button row-->                        
                         <div class="row">
@@ -193,7 +219,7 @@ function setVal($val){
                             <div class="col-lg-3" >
                                 <div class="panel-body" >
                                     <!-- Trigger the modal with a button -->
-                                    <button type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#myModalAppr">View Appreciation</button>
+                                    <button type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#myModalAppr">View ROI</button>
                                 </div>   
                             </div>
 
@@ -205,7 +231,7 @@ function setVal($val){
                         </div>
                    </div> <!-- end  div class="panel panel-info"-->
                 </form>
-    <!--output Modal Appreciation-->
+    <!--output Modal ROI-->
                 <div class="modal fade" id="myModalAppr" role="dialog">
                   <div class="modal-dialog">
 
@@ -213,13 +239,14 @@ function setVal($val){
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Appreciation Schedule</h4>
+                        <h4 class="modal-title"id="title">Return on Investment for </h4>
                       </div>
                         <div class="modal-body">
-                                <div id="notes">
-                                </div>
-                                <div id="jsGridAppr">
-                                </div>
+                            <div id="notes">
+                            </div>
+                            <div id="jsGridAppr" margin-bottom:300px">
+                            </div>
+                            
                         </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
