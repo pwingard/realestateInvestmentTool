@@ -34,7 +34,7 @@ function setVal($val){
         <link type="text/css" rel="stylesheet" href="/twc_includes/js/jsgrid-1.5.2/jsgrid.min.css" />
         <link type="text/css" rel="stylesheet" href="/twc_includes/js/jsgrid-1.5.2/jsgrid-theme.min.css" />
         <script type="text/javascript" src="/twc_includes/js/jsgrid-1.5.2/jsgrid.min.js"></script>
-        <title>Real Estate Investment Tool</title>
+        <title>RE12C The Real Estate Investment Tool</title>
         <!-- Bootstrap core CSS -->
         <!--<link rel="stylesheet" href="bootstrap.min.css">-->
         <!-- Custom styles for this template -->
@@ -57,17 +57,18 @@ function setVal($val){
                         <li role="presentation"><a href="contact/contact.html">Contact</a></li>
                     </ul>
                 </nav>
-                <h3 class="text-muted">RE12C</h3><small>Real Estate Investment Estimator</small>
+                <h3 class="text-muted">RE12C</h3><small>The Real Estate Investment Tool</small>
             </div>
 
             <div class="col-lg-12">  
 
                 <form id="formwhatever" action="" method="post" name="form" enctype="multipart/form-data">                  
 
-                    <p>The Real Estate Investment Tool is for helping real estate investors gauge potential 
-                        investment ROIs on rental properties. Tool inputs property value, mortgage parameters, 
-                        and anticipated appreciation rates and outputs an amortization table and a table  showing 
-                        the cash flow over a report period per year.
+                    <p>RE12C The Real Estate Investment Tool helps investors gauge potential returns on 
+                        investment (ROI) when considering purchasing rental properties. The tool inputs property value, 
+                        mortgage parameters, rental expenses, and anticipated real estate appreciation 
+                        rates and outputs a schedule of cash flow with ROI, and equity over a selectable period. 
+                        It also generates an amortization schedule.
                     </p>
                     <div class="row">
                         <div class="panel" >
@@ -132,7 +133,7 @@ function setVal($val){
                             <small>A monthly percentage of the gross rents</small>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="mnthlyMngmtPrct" <?php echo setVal("4.17");?>>
+                            <input class="form-control" type="text"  id="mnthlyMngmtPrct" <?php echo setVal("4");?>>
                         </div>
     <!--Monthly Maintenance and Capitol Improvements Percentage-->
                     <div class="panel-heading">
@@ -140,7 +141,7 @@ function setVal($val){
                         <small>A monthly percentage set aside from gross rents</small>
                     </div>
                     <div class="panel-body">
-                        <input class="form-control" type="text"  id="mnthlyMntnNCpImprPrct" <?php echo setVal("5.56");?>>
+                        <input class="form-control" type="text"  id="mnthlyMntnNCpImprPrct" <?php echo setVal("6");?>>
                     </div>
     <!--Monthly Vacancy/Collection Losses Percentage-->
                     <div class="panel-heading">
@@ -148,14 +149,14 @@ function setVal($val){
                         <small>An anticipated monthly percentage lost deducted from gross rents</small>
                     </div>
                     <div class="panel-body">
-                        <input class="form-control" type="text"  id="mnthlyVacColLossPrct" <?php echo setVal("2.78");?>>
+                        <input class="form-control" type="text"  id="mnthlyVacColLossPrct" <?php echo setVal("3");?>>
                     </div>
     <!--Closing Costs-->
                         <div class="panel-heading">
                             <h3 class="panel-title">Closing Costs</h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="fxdClsngCstDlrAmt" <?php echo setVal("6900");?>>
+                            <input class="form-control" type="text"  id="fxdClsngCstDlrAmt" <?php echo setVal("9000");?>>
                         </div>
     <!--Yearly Insurance-->
                         <div class="panel-heading">
@@ -175,7 +176,7 @@ function setVal($val){
                         </div>
     <!--Appreciation-->
                         <div class="panel-heading">
-                            <h3 class="panel-title">Appreciation</h3>
+                            <h3 class="panel-title">Property Appreciation Rate</h3>
                             <small>Estimated average annual appreciation rate for the property</small>
                         </div>
                         <div class="panel-body">
@@ -183,20 +184,20 @@ function setVal($val){
                         </div>
     <!--Years Until Sale-->
                         <div class="panel-heading">
-                            <h3 class="panel-title">Years Until Sale</h3>
-                            <small>Or when equity becomes a factor in planning?</small>
+                            <h3 class="panel-title">Report Time Frame</h3>
+                            <small>The period over which to calculate ROI</small>
                         </div>
                             
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="yrsToSale" name="yo" <?php echo setVal("6");?>>
+                            <input class="form-control" type="text"  id="yrsToSale" <?php echo setVal("10");?>>
                         </div>
-    <!--Months to Closing-->
+<!--    Months to Closing
                         <div class="panel-heading">
                             <h3 class="panel-title">Months Before Closing Loan</h3>
                         </div>
                         <div class="panel-body">
-                            <input class="form-control" type="text"  id="mthsToCls" <?php echo setVal("1");?>>
-                        </div>
+                            <input class="form-control" type="text"  id="mthsToCls" <?php //echo setVal("1");?>>
+                        </div>-->
     <!--button row-->                        
                         <div class="row">
         <!--run-->                 

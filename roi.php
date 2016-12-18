@@ -135,7 +135,7 @@ $fxdDwnPmtPrct=$_POST["fxdDwnPmtPrct"]/100;
 $termYrs=$_POST["termYrs"];
 $APR=$_POST["APR"];
 $fxdClsngCstDlrAmt=$_POST["fxdClsngCstDlrAmt"];//Vacancy and collection losses perct
-$yrsToSale=$_POST["yrsToSale"]+1;//year zero shows starting balances
+$yrsToSale=(integer)$_POST["yrsToSale"]+1;//year zero shows starting balances
 
 $strtMnthlyRent=$_POST["strtMnthlyRent"];//initial rent
 $mnthlyMngmtPrct=$_POST["mnthlyMngmtPrct"]/100;//management perct
@@ -197,7 +197,6 @@ $annlCashFlowArr=array();
                     "annlMainNCapImprvAcc"=>array("rentPrct",(real)$annlMainNCapImprvAcc, "subtract"),
                     //"annlCashFlow"=>array(),
     );
-
     //$annlCashFlowArr=array();
     foreach (range(0, $yrsToSale-1) as $year) {
         //set initial values to 0 except for colising costs and down payment
@@ -210,6 +209,7 @@ $annlCashFlowArr=array();
                 }
                 $annlCashFlowArr[$year]=-1*$initialCashOutlay;
             }
+            $propertyVal=$fxPrchPrcDlrAmt;
         }else{//save first year preappriation values
             $annlCashFlowArr[$year]=0;//initialize
             foreach ($accNames as $accKey1 => $arr1) {
@@ -244,20 +244,22 @@ $annlCashFlowArr=array();
                     $arr3[1]=round($arr3[1]+$annlApprcPrct*$arr3[1],2);
                 }
             }
+            $propertyVal=$propertyVal+$propertyVal*$annlApprcPrct;
         }
     }
-    
 $outputObj->annlCashFlowArr=$annlCashFlowArr;
 
 $absValInitialCashOutlay=abs($initialCashOutlay);//absolute value
 
-foreach ($annlCashFlowArr as $key => $value) {
-    if($key!=0)//skip year 0 which is the cash outlay
-        $outputObj->earningst+=$value;
+
+foreach ($annlCashFlowArr as $key7 => $value7) {
+    if($key7!=0)//skip year 0 which is the cash outlay
+        $outputObj->earningst+=$value7;
 }
 
 //ROI = ( (Earnings) - Initial Invested Amount) / Initial Invested Amount) ) × 100
 $outputObj->roi=round(($outputObj->earningst-$absValInitialCashOutlay)/($absValInitialCashOutlay),4)*100;
+$outputObj->equity="$".number_format(round($propertyVal-$amortArr["schedule"][(($yrsToSale-1)*12)-1]["balance"],2), 2);
 
 /*
  *     foreach (range(1,$reportLength*12) as $monthIn) 
@@ -265,30 +267,59 @@ $outputObj->roi=round(($outputObj->earningst-$absValInitialCashOutlay)/($absValI
         $thisRowObj->$value
         $outputObj->output[]=$thisRowObj;
  */
-
-
+$thisRowObjSum=new stdClass();
 foreach (range(0, $yrsToSale-1) as $year) {
     
     $thisRowObj=new stdClass();
     
     $thisRowObj->year=$year;
     $thisRowObj->annlGrossRent="$".number_format($outputObj->costAnlys["annlGrossRent"][$year],2);
+    $thisRowObjSum->annlGrossRent+=$outputObj->costAnlys["annlGrossRent"][$year];//sum
     $thisRowObj->annlInsFee="$".number_format($outputObj->costAnlys["annlInsFee"][$year],2);
+    $thisRowObjSum->annlInsFee+=$outputObj->costAnlys["annlInsFee"][$year];//sum
     $thisRowObj->annlTaxFee="$".number_format($outputObj->costAnlys["annlTaxFee"][$year],2);
+    $thisRowObjSum->annlTaxFee+=$outputObj->costAnlys["annlTaxFee"][$year];//sum
     $thisRowObj->annlMortPay="$".number_format($outputObj->costAnlys["annlMortPay"][$year],2);
+    $thisRowObjSum->annlMortPay+=$outputObj->costAnlys["annlMortPay"][$year];//sum
     $thisRowObj->annlMngmtFee="$".number_format($outputObj->costAnlys["annlMngmtFee"][$year],2);
+    $thisRowObjSum->annlMngmtFee+=$outputObj->costAnlys["annlMngmtFee"][$year];//sum
     $thisRowObj->annlVacNCollecLossAcc="$".number_format($outputObj->costAnlys["annlVacNCollecLossAcc"][$year],2);
+    $thisRowObjSum->annlVacNCollecLossAcc+=$outputObj->costAnlys["annlVacNCollecLossAcc"][$year];//sum
     $thisRowObj->annlMainNCapImprvAcc="$".number_format($outputObj->costAnlys["annlMainNCapImprvAcc"][$year],2);
+    $thisRowObjSum->annlMainNCapImprvAcc+=$outputObj->costAnlys["annlMainNCapImprvAcc"][$year];//sum
     $thisRowObj->cashFlow="$".number_format($outputObj->annlCashFlowArr[$year],2);
+    $thisRowObjSum->cashFlow+=$outputObj->annlCashFlowArr[$year];//sum
     
     $outputObj->output[]=$thisRowObj;
+    
+    
 }
-//$outputObj->roi;
+
+//echo "<pre>";
+//print_r($thisRowObjSum);
+//echo "</pre>";die();
+
+//add totals as last row
+    $thisRowObj=new stdClass();
+    
+    $thisRowObj->year="Totals";
+    $thisRowObj->annlGrossRent="$".number_format($thisRowObjSum->annlGrossRent,2);
+    $thisRowObj->annlInsFee="$".number_format($thisRowObjSum->annlInsFee,2);
+    $thisRowObj->annlTaxFee="$".number_format($thisRowObjSum->annlTaxFee,2);
+    $thisRowObj->annlMortPay="$".number_format($thisRowObjSum->annlMortPay,2);
+    $thisRowObj->annlMngmtFee="$".number_format($thisRowObjSum->annlMngmtFee,2);
+    $thisRowObj->annlVacNCollecLossAcc="$".number_format($thisRowObjSum->annlVacNCollecLossAcc,2);
+    $thisRowObj->annlMainNCapImprvAcc="$".number_format($thisRowObjSum->annlMainNCapImprvAcc,2);
+    $thisRowObj->cashFlow="$".number_format($thisRowObjSum->cashFlow,2);
+    
+    $outputObj->output[]=$thisRowObj;
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $_SESSION['data']=$outputObj;
+
+
 echo json_encode($outputObj);
 die();
 

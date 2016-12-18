@@ -25,7 +25,7 @@
             var annlInsDlrAmt=$('#annlInsDlrAmt').val();
             var annlApprcPrct=$('#annlApprcPrct').val();
             var yrsToSale=$('#yrsToSale').val();
-            var mthsToCls=$('#mthsToCls').val();
+            //var mthsToCls=$('#mthsToCls').val();
              
             $.ajax({
                 url: "roi.php",
@@ -47,7 +47,7 @@
                     annlTxsDlrAmt: annlTxsDlrAmt,
                     annlApprcPrct: annlApprcPrct,
                     yrsToSale: yrsToSale,
-                    mthsToCls: mthsToCls
+                    //mthsToCls: mthsToCls
                 },
                 //async: false,//keep loading gif from showing up
                 success: function (data) {
@@ -138,8 +138,8 @@ function makeGrid(data, post){
                     { title: "Taxes", name: "annlTaxFee", type: "text", width: 100, validate: "required" },
                     { title: "Insurance", name: "annlInsFee", type: "text", width: 100, validate: "required" },
                     { title: "Management "+ post.mnthlyMngmtPrct+"%", name: "annlMngmtFee", type: "text", width: 150, validate: "required" },
-                    { title: "Main/CapImpr "+ post.mnthlyMntnNCpImprPrct+"%", name: "annlMainNCapImprvAcc", type: "text", width: 160, validate: "required" },
-                    { title: "Vac/ColLosses "+ post.mnthlyVacColLossPrct+"%", name: "annlVacNCollecLossAcc", type: "text", width: 160, validate: "required" },
+                    { title: "Main/Cap.Impr "+ post.mnthlyMntnNCpImprPrct+"%", name: "annlMainNCapImprvAcc", type: "text", width: 160, validate: "required" },
+                    { title: "Vac/Col.Loss "+ post.mnthlyVacColLossPrct+"%", name: "annlVacNCollecLossAcc", type: "text", width: 150, validate: "required" },
                     { title: "Cash Flow", name: "cashFlow", type: "text", width: 100, validate: "required" },
                 ]
         });
