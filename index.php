@@ -57,14 +57,14 @@ function setVal($val){
                         <li role="presentation"><a href="contact/contact.html">Contact</a></li>
                     </ul>
                 </nav>
-                <h3 class="text-muted">RE12C</h3><small>The Real Estate Investment Tool</small>
+                <h3 class="text-muted">RentROI</h3><small>The Rental Return on Investment App</small>
             </div>
 
             <div class="col-lg-12">  
 
                 <form id="formwhatever" action="" method="post" name="form" enctype="multipart/form-data">                  
 
-                    <p>RE12C The Real Estate Investment Tool helps investors gauge potential returns on 
+                    <p>The RentRoi app easily helps investors gauge potential returns on 
                         investment (ROI) when considering purchasing rental properties. The tool inputs property value, 
                         mortgage parameters, rental expenses, and anticipated real estate appreciation 
                         rates and outputs a schedule of cash flow with ROI, and equity over a selectable period. 
